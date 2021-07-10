@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:getx/controllers/cartController.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({
-    Key? key,
-  }) : super(key: key);
+  final cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +61,12 @@ class CustomAppBar extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Center(
-                  child: Text(
-                    '0',
-                    style: TextStyle(color: Colors.white, fontSize: 10),
-                  ),
+                  child: GetX<CartController>(builder: (controller) {
+                    return Text(
+                      controller.cartItems.length.toString(),
+                      style: TextStyle(color: Colors.white, fontSize: 10),
+                    );
+                  }),
                 ),
               ),
             )
