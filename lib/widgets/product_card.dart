@@ -5,12 +5,12 @@ import 'package:getx/controllers/cartController.dart';
 final cartController = Get.put(CartController());
 
 class ProductCard extends StatelessWidget {
-  final String image;
   final int id;
+  final String image;
   final String name;
   final num price;
 
-  const ProductCard({
+  ProductCard({
     Key? key,
     required this.image,
     required this.name,
@@ -45,7 +45,7 @@ class ProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 190,
+                    width: 150,
                     child: Text(
                       name,
                       overflow: TextOverflow.ellipsis,
@@ -64,12 +64,21 @@ class ProductCard extends StatelessWidget {
               ),
             ],
           ),
-          IconButton(
-            onPressed: () {
-              cartController.addToCart(id);
-            },
-            icon: Icon(Icons.add_shopping_cart_outlined),
-          ),
+          GetX<CartController>(builder: (controller) {
+            return IconButton(
+              onPressed: () {
+                cartController.addToCart(id);
+              },
+              icon: controller.isExistInCart(id) >= 0
+                  ? Icon(
+                      Icons.task_alt_outlined,
+                      color: Colors.green,
+                    )
+                  : Icon(
+                      Icons.add_shopping_cart_rounded,
+                    ),
+            );
+          }),
         ],
       ),
     );

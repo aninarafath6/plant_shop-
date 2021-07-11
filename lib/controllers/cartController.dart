@@ -17,4 +17,8 @@ class CartController extends GetxController {
       }
     }
   }
+
+  int isExistInCart(int id) {
+    return cartItems.indexWhere((element) => element['id'] == id);
+  }
 }
